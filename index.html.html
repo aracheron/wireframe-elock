@@ -148,9 +148,9 @@ form.fake{display:grid;gap:10px}
   </header>
 
   <div class="tabs" role="tablist" aria-label="Wireframes">
-    <button role="tab" aria-selected="true" aria-controls="v-home" id="t-home" type="button">Homepage (desktop)</button>
-    <button role="tab" aria-selected="false" aria-controls="v-mobile" id="t-mobile" type="button">Homepage (mobile)</button>
-    <button role="tab" aria-selected="false" aria-controls="v-product" id="t-product" type="button">Product page template</button>
+    <button role="tab" aria-selected="true" aria-controls="v-home" id="t-home" type="button" tabindex="0">Homepage (desktop)</button>
+    <button role="tab" aria-selected="false" aria-controls="v-mobile" id="t-mobile" type="button" tabindex="-1">Homepage (mobile)</button>
+    <button role="tab" aria-selected="false" aria-controls="v-product" id="t-product" type="button" tabindex="-1">Product page template</button>
   </div>
 
   <!-- ============ HOMEPAGE ============ -->
@@ -552,15 +552,31 @@ form.fake{display:grid;gap:10px}
 
 <script>
 (function(){
-  var tabs=document.querySelectorAll('[role="tab"]');
+  var tabs=Array.from(document.querySelectorAll('[role="tab"]'));
   function show(id){
     tabs.forEach(function(t){
       var on=t.getAttribute('aria-controls')===id;
       t.setAttribute('aria-selected',on?'true':'false');
+      t.setAttribute('tabindex',on?'0':'-1');
       document.getElementById(t.getAttribute('aria-controls')).hidden=!on;
     });
   }
-  tabs.forEach(function(t){t.addEventListener('click',function(){show(t.getAttribute('aria-controls'));});});
+  tabs.forEach(function(t, i){
+    t.addEventListener('click',function(){
+      show(t.getAttribute('aria-controls'));
+    });
+    t.addEventListener('keydown',function(e){
+      var dir = 0;
+      if(e.key==='ArrowLeft'){ dir = -1; }
+      else if(e.key==='ArrowRight'){ dir = 1; }
+      if(dir !== 0){
+        e.preventDefault();
+        var nextIndex = (i + dir + tabs.length) % tabs.length;
+        tabs[nextIndex].focus();
+        show(tabs[nextIndex].getAttribute('aria-controls'));
+      }
+    });
+  });
   var btn=document.getElementById('themeBtn');
   btn.addEventListener('click',function(){
     var root=document.documentElement;
