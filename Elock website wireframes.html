@@ -44,7 +44,7 @@ h1,h2,h3,h4,p{margin:0}
 .tabs{display:flex;gap:4px;margin:24px 0 20px;border-bottom:1px solid var(--line);overflow-x:auto}
 .tabs button{font:inherit;font-weight:500;background:none;border:0;padding:10px 16px;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap}
 .tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--exit)}
-.tabs button:focus-visible,.theme:focus-visible{outline:3px solid var(--exit);outline-offset:2px}
+.tabs button:focus-visible,.theme:focus-visible,.phone .inner:focus-visible{outline:3px solid var(--exit);outline-offset:2px}
 .theme{position:absolute;right:20px;top:20px;font:inherit;font-size:13px;background:var(--panel);color:var(--ink);border:1px solid var(--line);padding:6px 10px;cursor:pointer}
 .view[hidden]{display:none}
 
@@ -148,9 +148,9 @@ form.fake{display:grid;gap:10px}
   </header>
 
   <div class="tabs" role="tablist" aria-label="Wireframes">
-    <button role="tab" aria-selected="true" aria-controls="v-home" id="t-home" type="button">Homepage (desktop)</button>
-    <button role="tab" aria-selected="false" aria-controls="v-mobile" id="t-mobile" type="button">Homepage (mobile)</button>
-    <button role="tab" aria-selected="false" aria-controls="v-product" id="t-product" type="button">Product page template</button>
+    <button role="tab" aria-selected="true" tabindex="0" aria-controls="v-home" id="t-home" type="button">Homepage (desktop)</button>
+    <button role="tab" aria-selected="false" tabindex="-1" aria-controls="v-mobile" id="t-mobile" type="button">Homepage (mobile)</button>
+    <button role="tab" aria-selected="false" tabindex="-1" aria-controls="v-product" id="t-product" type="button">Product page template</button>
   </div>
 
   <!-- ============ HOMEPAGE ============ -->
@@ -552,15 +552,28 @@ form.fake{display:grid;gap:10px}
 
 <script>
 (function(){
-  var tabs=document.querySelectorAll('[role="tab"]');
+  var tabs=Array.from(document.querySelectorAll('[role="tab"]'));
   function show(id){
     tabs.forEach(function(t){
       var on=t.getAttribute('aria-controls')===id;
       t.setAttribute('aria-selected',on?'true':'false');
+      t.setAttribute('tabindex',on?'0':'-1');
       document.getElementById(t.getAttribute('aria-controls')).hidden=!on;
     });
   }
-  tabs.forEach(function(t){t.addEventListener('click',function(){show(t.getAttribute('aria-controls'));});});
+  tabs.forEach(function(t, i){
+    t.addEventListener('click',function(){show(t.getAttribute('aria-controls'));});
+    t.addEventListener('keydown',function(e){
+      var next = -1;
+      if (e.key === 'ArrowRight') next = (i + 1) % tabs.length;
+      if (e.key === 'ArrowLeft') next = (i - 1 + tabs.length) % tabs.length;
+      if (next !== -1) {
+        e.preventDefault();
+        tabs[next].focus();
+        show(tabs[next].getAttribute('aria-controls'));
+      }
+    });
+  });
   var btn=document.getElementById('themeBtn');
   btn.addEventListener('click',function(){
     var root=document.documentElement;
