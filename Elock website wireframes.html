@@ -144,7 +144,7 @@ form.fake{display:grid;gap:10px}
       <span><i class="sw go"></i> Primary action (exit-sign green)</span>
       <span><i class="sw flag"></i> Needs input from Elock</span>
     </div>
-    <button class="theme" id="themeBtn" type="button">Toggle light/dark</button>
+    <button class="theme" id="themeBtn" type="button" title="Toggle theme (T)" aria-keyshortcuts="T">Toggle light/dark <kbd class="tag-miss">T</kbd></button>
   </header>
 
   <div class="tabs" role="tablist" aria-label="Wireframes">
@@ -562,10 +562,19 @@ form.fake{display:grid;gap:10px}
   }
   tabs.forEach(function(t){t.addEventListener('click',function(){show(t.getAttribute('aria-controls'));});});
   var btn=document.getElementById('themeBtn');
-  btn.addEventListener('click',function(){
+  function toggleTheme(){
     var root=document.documentElement;
     var dark=root.getAttribute('data-theme')==='dark' || (!root.getAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
     root.setAttribute('data-theme',dark?'light':'dark');
+  }
+  btn.addEventListener('click',toggleTheme);
+  document.addEventListener('keydown',function(e){
+    if(e.key.toLowerCase()==='t' && !e.ctrlKey && !e.metaKey){
+      var tag=e.target.tagName.toLowerCase();
+      if(tag!=='input' && tag!=='textarea' && !e.target.isContentEditable){
+        toggleTheme();
+      }
+    }
   });
 })();
 </script>
