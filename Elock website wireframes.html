@@ -553,14 +553,38 @@ form.fake{display:grid;gap:10px}
 <script>
 (function(){
   var tabs=document.querySelectorAll('[role="tab"]');
+  var tabsArray = Array.prototype.slice.call(tabs);
   function show(id){
     tabs.forEach(function(t){
       var on=t.getAttribute('aria-controls')===id;
       t.setAttribute('aria-selected',on?'true':'false');
+      t.setAttribute('tabindex', on?'0':'-1');
       document.getElementById(t.getAttribute('aria-controls')).hidden=!on;
     });
   }
-  tabs.forEach(function(t){t.addEventListener('click',function(){show(t.getAttribute('aria-controls'));});});
+  tabs.forEach(function(t){
+    t.setAttribute('tabindex', t.getAttribute('aria-selected') === 'true' ? '0' : '-1');
+    t.addEventListener('click',function(){
+      show(t.getAttribute('aria-controls'));
+      t.focus();
+    });
+    t.addEventListener('keydown', function(e) {
+      var currentIndex = tabsArray.indexOf(t);
+      var newIndex = currentIndex;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        newIndex = (currentIndex + 1) % tabsArray.length;
+        e.preventDefault();
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        newIndex = (currentIndex - 1 + tabsArray.length) % tabsArray.length;
+        e.preventDefault();
+      }
+      if (newIndex !== currentIndex) {
+        var newTab = tabsArray[newIndex];
+        show(newTab.getAttribute('aria-controls'));
+        newTab.focus();
+      }
+    });
+  });
   var btn=document.getElementById('themeBtn');
   btn.addEventListener('click',function(){
     var root=document.documentElement;
