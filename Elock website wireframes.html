@@ -44,7 +44,7 @@ h1,h2,h3,h4,p{margin:0}
 .tabs{display:flex;gap:4px;margin:24px 0 20px;border-bottom:1px solid var(--line);overflow-x:auto}
 .tabs button{font:inherit;font-weight:500;background:none;border:0;padding:10px 16px;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap}
 .tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--exit)}
-.tabs button:focus-visible,.theme:focus-visible{outline:3px solid var(--exit);outline-offset:2px}
+.tabs button:focus-visible,.theme:focus-visible,.btn:focus-visible{outline:3px solid var(--exit);outline-offset:2px}
 .theme{position:absolute;right:20px;top:20px;font:inherit;font-size:13px;background:var(--panel);color:var(--ink);border:1px solid var(--line);padding:6px 10px;cursor:pointer}
 .view[hidden]{display:none}
 
@@ -162,13 +162,13 @@ form.fake{display:grid;gap:10px}
           <span class="logo">ELOCK</span>
           <span>Why Elock</span><span>Products</span><span>Solutions</span><span>Resources</span><span>Projects</span><span>Partners</span><span>About</span>
           <span class="sp"></span>
-          <span>Search</span><span class="btn go">Get a quote</span>
+          <span>Search</span><span role="button" tabindex="0" class="btn go">Get a quote</span>
         </div>
         <div class="pad hero">
           <div>
             <h2>Every second matters during a fire emergency.</h2>
             <p>Electromagnetic locks, power supplies and release devices built so doors do what they must when people need to leave.</p>
-            <span class="btn go">Plan my door system</span> &nbsp; <span class="btn">Talk to an engineer</span>
+            <span role="button" tabindex="0" class="btn go">Plan my door system</span> &nbsp; <span role="button" tabindex="0" class="btn">Talk to an engineer</span>
           </div>
           <div class="ph" style="min-height:210px">Hero image: real door installation with lock, exit button and release in frame</div>
         </div>
@@ -315,7 +315,7 @@ form.fake{display:grid;gap:10px}
           <div>
             <div class="sec-h">Sold in 75+ countries</div>
             <p style="color:var(--muted);font-size:13.5px;margin-bottom:10px">[Regions list from sales team, as text, not a picture]</p>
-            <span class="btn">Find a distributor</span> &nbsp; <span class="btn go">Become a distributor</span>
+            <span role="button" tabindex="0" class="btn">Find a distributor</span> &nbsp; <span role="button" tabindex="0" class="btn go">Become a distributor</span>
           </div>
           <div class="ph" style="min-height:130px">Simple regional map</div>
         </div>
@@ -339,7 +339,7 @@ form.fake{display:grid;gap:10px}
             <div class="field">Name</div><div class="field">Email</div><div class="field">Company</div>
             <div class="field">I am a: installer / consultant / distributor / building owner / other</div>
             <div class="field" style="min-height:60px">What do you need?</div>
-            <span class="btn go" style="justify-self:start">Send enquiry</span>
+            <span role="button" tabindex="0" class="btn go" style="justify-self:start">Send enquiry</span>
           </form>
         </div>
       </div>
@@ -376,8 +376,8 @@ form.fake{display:grid;gap:10px}
           <div class="m-sec">
             <h2>Every second matters during a fire emergency.</h2>
             <p style="color:var(--muted);font-size:13.5px">Locks, power supplies and release devices built so doors do what they must.</p>
-            <span class="btn go">Plan my door system</span>
-            <span class="btn">Talk to an engineer</span>
+            <span role="button" tabindex="0" class="btn go">Plan my door system</span>
+            <span role="button" tabindex="0" class="btn">Talk to an engineer</span>
           </div>
           <div class="m-sec"><span class="chip">CE</span><span class="chip">ISO 9001</span><span class="chip">Made in Malaysia</span><span class="chip">MCMC</span><span class="chip">75+ countries</span></div>
           <div class="m-sec">
@@ -444,7 +444,7 @@ form.fake{display:grid;gap:10px}
             <span class="chip">2200 lbs (1000 kg)</span><span class="chip">DC12V</span><span class="chip">Fail-safe (power off unlocks)</span><span class="chip">Delay 0 / 2.5 / 5 / 9 s</span><span class="chip">CE</span>
             <p style="margin:12px 0 6px;font-size:13.5px">Suitable for retail (anti-theft), wooden, glass or metal doors.</p>
             <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px">
-              <span class="btn go">Request a quote</span><span class="btn">Download datasheet</span><span class="btn">WhatsApp</span>
+              <span role="button" tabindex="0" class="btn go">Request a quote</span><span role="button" tabindex="0" class="btn">Download datasheet</span><span role="button" tabindex="0" class="btn">WhatsApp</span>
             </div>
             <p style="margin-top:10px;font-size:12.5px;color:var(--muted)">Need help choosing? Talk to an engineer.</p>
           </div>
@@ -517,7 +517,7 @@ form.fake{display:grid;gap:10px}
         <div class="acc"><span>Which power supply do I need?</span><span>+</span></div>
         <div class="sec-h" style="margin-top:18px">Related products</div>
         <div class="grid g4"><div class="ph" style="height:60px">Product</div><div class="ph" style="height:60px">Product</div><div class="ph" style="height:60px">Product</div><div class="ph" style="height:60px">Product</div></div>
-        <div style="margin-top:16px;padding:14px;border:1.5px solid var(--ink);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><b>Not sure this is the right lock?</b><span class="btn go">Plan my door system</span></div>
+        <div style="margin-top:16px;padding:14px;border:1.5px solid var(--ink);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><b>Not sure this is the right lock?</b><span role="button" tabindex="0" class="btn go">Plan my door system</span></div>
       </div>
       <div class="note">
         <h3>D. Questions, related, closing CTA</h3>
