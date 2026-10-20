@@ -44,7 +44,7 @@ h1,h2,h3,h4,p{margin:0}
 .tabs{display:flex;gap:4px;margin:24px 0 20px;border-bottom:1px solid var(--line);overflow-x:auto}
 .tabs button{font:inherit;font-weight:500;background:none;border:0;padding:10px 16px;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap}
 .tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--exit)}
-.tabs button:focus-visible,.theme:focus-visible{outline:3px solid var(--exit);outline-offset:2px}
+.tabs button:focus-visible,.theme:focus-visible,.inner:focus-visible,.scroll:focus-visible,[role="tabpanel"]:focus-visible{outline:3px solid var(--exit);outline-offset:2px}
 .theme{position:absolute;right:20px;top:20px;font:inherit;font-size:13px;background:var(--panel);color:var(--ink);border:1px solid var(--line);padding:6px 10px;cursor:pointer}
 .view[hidden]{display:none}
 
@@ -139,7 +139,7 @@ form.fake{display:grid;gap:10px}
   <header class="top">
     <h1>Elock website wireframes</h1>
     <p>Low-fidelity layouts for the homepage (desktop and mobile) and the product page template, following the revamp narrative: risk, problem, question, solution, Elock's role. Copy shown is draft and for layout only.</p>
-    <div class="legend" aria-label="Legend">
+    <div class="legend" role="group" aria-label="Legend">
       <span><i class="sw hatch"></i> Image or photo placeholder</span>
       <span><i class="sw go"></i> Primary action (exit-sign green)</span>
       <span><i class="sw flag"></i> Needs input from Elock</span>
@@ -154,7 +154,7 @@ form.fake{display:grid;gap:10px}
   </div>
 
   <!-- ============ HOMEPAGE ============ -->
-  <section class="view" id="v-home" role="tabpanel" aria-labelledby="t-home">
+  <section class="view" id="v-home" role="tabpanel" tabindex="0" aria-labelledby="t-home">
 
     <div class="row">
       <div class="screen">
@@ -368,10 +368,10 @@ form.fake{display:grid;gap:10px}
   </section>
 
   <!-- ============ MOBILE ============ -->
-  <section class="view" id="v-mobile" role="tabpanel" aria-labelledby="t-mobile" hidden>
+  <section class="view" id="v-mobile" role="tabpanel" tabindex="0" aria-labelledby="t-mobile" hidden>
     <div class="phones">
-      <div class="phone" aria-label="Mobile homepage wireframe">
-        <div class="inner" tabindex="0">
+      <div class="phone">
+        <div class="inner" tabindex="0" role="region" aria-label="Mobile homepage wireframe">
           <div class="m-bar"><span class="logo">ELOCK</span><span class="sp"></span><span class="ic">Call</span><span class="ic">Menu</span></div>
           <div class="m-sec">
             <h2>Every second matters during a fire emergency.</h2>
@@ -428,7 +428,7 @@ form.fake{display:grid;gap:10px}
   </section>
 
   <!-- ============ PRODUCT ============ -->
-  <section class="view" id="v-product" role="tabpanel" aria-labelledby="t-product" hidden>
+  <section class="view" id="v-product" role="tabpanel" tabindex="0" aria-labelledby="t-product" hidden>
 
     <div class="row">
       <div class="screen">
@@ -461,7 +461,7 @@ form.fake{display:grid;gap:10px}
     <div class="row">
       <div class="screen pad">
         <div style="display:flex;gap:18px;border-bottom:1.5px solid var(--line);padding-bottom:8px;margin-bottom:12px;font-size:14px;font-weight:500"><span>Overview</span><span style="color:var(--muted)">Specifications</span><span style="color:var(--muted)">Works with</span><span style="color:var(--muted)">Documents</span><span style="color:var(--muted)">Installation</span></div>
-        <div class="scroll">
+        <div class="scroll" tabindex="0" role="region" aria-label="Specifications table">
         <table class="tbl">
           <tr><th colspan="2">Specifications</th></tr>
           <tr><td>Holding force</td><td>2200 lbs (1000 kg)</td></tr>
@@ -527,7 +527,7 @@ form.fake{display:grid;gap:10px}
 
     <h2 style="font-size:20px;margin:30px 0 10px">Product content template</h2>
     <p style="color:var(--muted);max-width:70ch;margin-bottom:12px">Every product page should answer the same questions. This is the field list the content team fills in. Fields marked "to supply" are the gaps I could see on the current B100 page.</p>
-    <div class="screen pad scroll">
+    <div class="screen pad scroll" tabindex="0" role="region" aria-label="Product content template table">
       <table class="tbl">
         <tr><th>Field</th><th>Example / guidance</th><th>Status on B100</th></tr>
         <tr><td>Product name and code</td><td>B100 Bolt Action Lock. Same format for all products.</td><td>Present</td></tr>
