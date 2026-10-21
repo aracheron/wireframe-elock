@@ -1,0 +1,3 @@
+## 2026-10-21 - [ARIA Tablist Keyboard Navigation]
+**Learning:** Custom tab components often miss keyboard support (arrow keys for navigation) and roaming tabindex logic which are required for standard WAI-ARIA tablist accessibility.
+**Action:** When working on custom UI components, always check keyboard navigation compliance and utilize standard ARIA patterns like roving tabindexes (`tabindex="0"` for active, `-1` for inactive) along with arrow key handlers for lists/tabs.
