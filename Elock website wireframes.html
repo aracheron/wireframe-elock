@@ -148,13 +148,13 @@ form.fake{display:grid;gap:10px}
   </header>
 
   <div class="tabs" role="tablist" aria-label="Wireframes">
-    <button role="tab" aria-selected="true" aria-controls="v-home" id="t-home" type="button">Homepage (desktop)</button>
-    <button role="tab" aria-selected="false" aria-controls="v-mobile" id="t-mobile" type="button">Homepage (mobile)</button>
-    <button role="tab" aria-selected="false" aria-controls="v-product" id="t-product" type="button">Product page template</button>
+    <button role="tab" aria-selected="true" aria-controls="v-home" id="t-home" tabindex="0" type="button">Homepage (desktop)</button>
+    <button role="tab" aria-selected="false" aria-controls="v-mobile" id="t-mobile" tabindex="-1" type="button">Homepage (mobile)</button>
+    <button role="tab" aria-selected="false" aria-controls="v-product" id="t-product" tabindex="-1" type="button">Product page template</button>
   </div>
 
   <!-- ============ HOMEPAGE ============ -->
-  <section class="view" id="v-home" role="tabpanel" aria-labelledby="t-home">
+  <section class="view" id="v-home" role="tabpanel" aria-labelledby="t-home" tabindex="0">
 
     <div class="row">
       <div class="screen">
@@ -368,7 +368,7 @@ form.fake{display:grid;gap:10px}
   </section>
 
   <!-- ============ MOBILE ============ -->
-  <section class="view" id="v-mobile" role="tabpanel" aria-labelledby="t-mobile" hidden>
+  <section class="view" id="v-mobile" role="tabpanel" aria-labelledby="t-mobile" tabindex="0" hidden>
     <div class="phones">
       <div class="phone" aria-label="Mobile homepage wireframe">
         <div class="inner" tabindex="0">
@@ -428,7 +428,7 @@ form.fake{display:grid;gap:10px}
   </section>
 
   <!-- ============ PRODUCT ============ -->
-  <section class="view" id="v-product" role="tabpanel" aria-labelledby="t-product" hidden>
+  <section class="view" id="v-product" role="tabpanel" aria-labelledby="t-product" tabindex="0" hidden>
 
     <div class="row">
       <div class="screen">
@@ -552,15 +552,24 @@ form.fake{display:grid;gap:10px}
 
 <script>
 (function(){
-  var tabs=document.querySelectorAll('[role="tab"]');
+  var tabs=Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
   function show(id){
     tabs.forEach(function(t){
       var on=t.getAttribute('aria-controls')===id;
       t.setAttribute('aria-selected',on?'true':'false');
+      t.setAttribute('tabindex',on?'0':'-1');
       document.getElementById(t.getAttribute('aria-controls')).hidden=!on;
     });
   }
-  tabs.forEach(function(t){t.addEventListener('click',function(){show(t.getAttribute('aria-controls'));});});
+  tabs.forEach(function(t, i){
+    t.addEventListener('click',function(){show(t.getAttribute('aria-controls'));});
+    t.addEventListener('keydown',function(e){
+      var next = null;
+      if(e.key==='ArrowRight'){ next = tabs[i+1] || tabs[0]; }
+      if(e.key==='ArrowLeft'){ next = tabs[i-1] || tabs[tabs.length-1]; }
+      if(next){ e.preventDefault(); next.focus(); next.click(); }
+    });
+  });
   var btn=document.getElementById('themeBtn');
   btn.addEventListener('click',function(){
     var root=document.documentElement;
