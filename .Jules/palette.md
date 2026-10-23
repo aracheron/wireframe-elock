@@ -1,0 +1,3 @@
+## 2024-05-24 - Vanilla ARIA Tablist Keyboard Navigation
+**Learning:** When adding keyboard navigation to vanilla JS tablists without a framework, arrow key events must call `preventDefault()` to avoid scrolling the page, and the `tabindex` must be updated correctly on all tabs whenever the selected tab changes (roving tabindex pattern) to prevent screen readers and keyboard users from losing context.
+**Action:** When implementing tabs in vanilla HTML, ensure `keydown` handlers for `ArrowLeft`/`ArrowRight` calculate the new index with modulo logic `(i + dir + tabs.length) % tabs.length` and explicitly update the `tabindex` attribute to "0" for the active tab and "-1" for inactive tabs during the display toggle function.
