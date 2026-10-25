@@ -144,7 +144,7 @@ form.fake{display:grid;gap:10px}
       <span><i class="sw go"></i> Primary action (exit-sign green)</span>
       <span><i class="sw flag"></i> Needs input from Elock</span>
     </div>
-    <button class="theme" id="themeBtn" type="button">Toggle light/dark</button>
+    <button class="theme" id="themeBtn" type="button" aria-pressed="false">Toggle light/dark</button>
   </header>
 
   <div class="tabs" role="tablist" aria-label="Wireframes">
@@ -562,10 +562,13 @@ form.fake{display:grid;gap:10px}
   }
   tabs.forEach(function(t){t.addEventListener('click',function(){show(t.getAttribute('aria-controls'));});});
   var btn=document.getElementById('themeBtn');
+  var root=document.documentElement;
+  var initDark=root.getAttribute('data-theme')==='dark' || (!root.getAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  btn.setAttribute('aria-pressed', initDark ? 'true' : 'false');
   btn.addEventListener('click',function(){
-    var root=document.documentElement;
     var dark=root.getAttribute('data-theme')==='dark' || (!root.getAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
     root.setAttribute('data-theme',dark?'light':'dark');
+    btn.setAttribute('aria-pressed', dark ? 'false' : 'true');
   });
 })();
 </script>
