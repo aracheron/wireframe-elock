@@ -139,12 +139,12 @@ form.fake{display:grid;gap:10px}
   <header class="top">
     <h1>Elock website wireframes</h1>
     <p>Low-fidelity layouts for the homepage (desktop and mobile) and the product page template, following the revamp narrative: risk, problem, question, solution, Elock's role. Copy shown is draft and for layout only.</p>
-    <div class="legend" aria-label="Legend">
+    <div class="legend" role="group" aria-label="Legend">
       <span><i class="sw hatch"></i> Image or photo placeholder</span>
       <span><i class="sw go"></i> Primary action (exit-sign green)</span>
       <span><i class="sw flag"></i> Needs input from Elock</span>
     </div>
-    <button class="theme" id="themeBtn" type="button">Toggle light/dark</button>
+    <button class="theme" id="themeBtn" type="button" aria-pressed="false">Toggle dark theme</button>
   </header>
 
   <div class="tabs" role="tablist" aria-label="Wireframes">
@@ -566,7 +566,11 @@ form.fake{display:grid;gap:10px}
     var root=document.documentElement;
     var dark=root.getAttribute('data-theme')==='dark' || (!root.getAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
     root.setAttribute('data-theme',dark?'light':'dark');
+    btn.setAttribute('aria-pressed', dark ? 'false' : 'true');
   });
+  // Initialize aria-pressed state based on current theme
+  var initDark = document.documentElement.getAttribute('data-theme') === 'dark' || (!document.documentElement.getAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  btn.setAttribute('aria-pressed', initDark ? 'true' : 'false');
 })();
 </script>
 </body>
