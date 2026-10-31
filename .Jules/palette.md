@@ -1,0 +1,3 @@
+## 2026-10-31 - Theme Toggle Accessibility and Legend ARIA
+**Learning:** Found that custom theme toggle buttons often lack state announcements for screen readers (missing `aria-pressed`), and generic elements like `div` used as legends need `role="group"` when paired with an `aria-label` to be properly announced.
+**Action:** Always ensure toggle buttons initialize and dynamically update `aria-pressed`, and apply `role="group"` to non-semantic containers that use `aria-label` to group related content.
