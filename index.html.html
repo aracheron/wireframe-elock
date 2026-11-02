@@ -154,7 +154,7 @@ form.fake{display:grid;gap:10px}
   </div>
 
   <!-- ============ HOMEPAGE ============ -->
-  <section class="view" id="v-home" role="tabpanel" aria-labelledby="t-home">
+  <section class="view" id="v-home" role="tabpanel" aria-labelledby="t-home" tabindex="0">
 
     <div class="row">
       <div class="screen">
@@ -368,7 +368,7 @@ form.fake{display:grid;gap:10px}
   </section>
 
   <!-- ============ MOBILE ============ -->
-  <section class="view" id="v-mobile" role="tabpanel" aria-labelledby="t-mobile" hidden>
+  <section class="view" id="v-mobile" role="tabpanel" aria-labelledby="t-mobile" tabindex="0" hidden>
     <div class="phones">
       <div class="phone" aria-label="Mobile homepage wireframe">
         <div class="inner" tabindex="0">
@@ -428,7 +428,7 @@ form.fake{display:grid;gap:10px}
   </section>
 
   <!-- ============ PRODUCT ============ -->
-  <section class="view" id="v-product" role="tabpanel" aria-labelledby="t-product" hidden>
+  <section class="view" id="v-product" role="tabpanel" aria-labelledby="t-product" tabindex="0" hidden>
 
     <div class="row">
       <div class="screen">
@@ -557,10 +557,27 @@ form.fake{display:grid;gap:10px}
     tabs.forEach(function(t){
       var on=t.getAttribute('aria-controls')===id;
       t.setAttribute('aria-selected',on?'true':'false');
+      t.setAttribute('tabindex',on?'0':'-1');
       document.getElementById(t.getAttribute('aria-controls')).hidden=!on;
     });
   }
-  tabs.forEach(function(t){t.addEventListener('click',function(){show(t.getAttribute('aria-controls'));});});
+  tabs.forEach(function(t, i){
+    t.setAttribute('tabindex', t.getAttribute('aria-selected') === 'true' ? '0' : '-1');
+    t.addEventListener('click',function(){show(t.getAttribute('aria-controls'));});
+    t.addEventListener('keydown',function(e){
+      var nextIdx = i;
+      if (e.key === 'ArrowRight') nextIdx = (i + 1) % tabs.length;
+      else if (e.key === 'ArrowLeft') nextIdx = (i - 1 + tabs.length) % tabs.length;
+      else if (e.key === 'Home') nextIdx = 0;
+      else if (e.key === 'End') nextIdx = tabs.length - 1;
+
+      if (nextIdx !== i) {
+        e.preventDefault();
+        tabs[nextIdx].focus();
+        tabs[nextIdx].click();
+      }
+    });
+  });
   var btn=document.getElementById('themeBtn');
   btn.addEventListener('click',function(){
     var root=document.documentElement;
