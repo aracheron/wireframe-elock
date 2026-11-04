@@ -1,0 +1,3 @@
+## 2026-11-04 - Keyboard Navigation for Custom Tablists
+**Learning:** When using custom `role="tab"` elements instead of native buttons, developers often forget that keyboard navigation does not come for free. In this app, relying only on CSS for visual focus isn't enough for true accessibility. A roving `tabindex` is necessary so users can tab into the currently active panel and cycle between them via arrow keys.
+**Action:** Next time I encounter a custom UI component implementing WAI-ARIA roles, explicitly double check if it lacks keyboard navigation handling (especially `ArrowLeft` / `ArrowRight` for tablists/menus) and roving `tabindex` to fix it.
