@@ -1,0 +1,3 @@
+## 2024-05-18 - Roving tabindex for WAI-ARIA tablists
+**Learning:** For accessibility in tablist components, using a roving `tabindex` ensures that screen reader and keyboard users can navigate tabs intuitively. The selected tab has `tabindex="0"`, while inactive tabs get `tabindex="-1"`. Users expect to navigate the tab list using `ArrowLeft` and `ArrowRight`, not the `Tab` key (which they use to enter/exit the tablist entirely).
+**Action:** When creating or fixing custom tab implementations, always update both `aria-selected` and `tabindex` dynamically, and attach a `keydown` event listener for arrow-key navigation.
