@@ -562,10 +562,17 @@ form.fake{display:grid;gap:10px}
   }
   tabs.forEach(function(t){t.addEventListener('click',function(){show(t.getAttribute('aria-controls'));});});
   var btn=document.getElementById('themeBtn');
+  function updateBtn(dark){
+    btn.textContent = dark ? '☀️ Light mode' : '🌙 Dark mode';
+    btn.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+  }
+  var root=document.documentElement;
+  var isDark=root.getAttribute('data-theme')==='dark' || (!root.getAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  updateBtn(isDark);
   btn.addEventListener('click',function(){
-    var root=document.documentElement;
     var dark=root.getAttribute('data-theme')==='dark' || (!root.getAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
     root.setAttribute('data-theme',dark?'light':'dark');
+    updateBtn(!dark);
   });
 })();
 </script>
