@@ -553,14 +553,32 @@ form.fake{display:grid;gap:10px}
 <script>
 (function(){
   var tabs=document.querySelectorAll('[role="tab"]');
+  var tabsArr = Array.from(tabs);
   function show(id){
     tabs.forEach(function(t){
       var on=t.getAttribute('aria-controls')===id;
       t.setAttribute('aria-selected',on?'true':'false');
+      t.setAttribute('tabindex',on?'0':'-1');
       document.getElementById(t.getAttribute('aria-controls')).hidden=!on;
     });
   }
-  tabs.forEach(function(t){t.addEventListener('click',function(){show(t.getAttribute('aria-controls'));});});
+  tabs.forEach(function(t, i){
+    t.setAttribute('tabindex', t.getAttribute('aria-selected') === 'true' ? '0' : '-1');
+    t.addEventListener('click',function(){show(t.getAttribute('aria-controls'));});
+    t.addEventListener('keydown', function(e) {
+      var nextIdx = -1;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        nextIdx = (i + 1) % tabsArr.length;
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        nextIdx = (i - 1 + tabsArr.length) % tabsArr.length;
+      }
+      if (nextIdx !== -1) {
+        e.preventDefault();
+        tabsArr[nextIdx].focus();
+        show(tabsArr[nextIdx].getAttribute('aria-controls'));
+      }
+    });
+  });
   var btn=document.getElementById('themeBtn');
   btn.addEventListener('click',function(){
     var root=document.documentElement;
