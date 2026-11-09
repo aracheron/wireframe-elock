@@ -1,0 +1,3 @@
+## 2024-05-24 - Tablist keyboard navigation and role groups
+**Learning:** For an `aria-label` to be announced by screen readers on non-interactive semantic elements like a `div` containing a legend, the element must be given a widget role like `role="group"` or `role="region"`. Also, a standard WAI-ARIA `tablist` must implement roving `tabindex` (`0` for selected, `-1` for unselected) and keyboard event listeners for `ArrowLeft` and `ArrowRight` so users can navigate between tabs using the keyboard.
+**Action:** When implementing custom components like tabs or structural legends, always check the WAI-ARIA Authoring Practices Guide (APG) for required keyboard interactions and role requirements to ensure labels are actually read.
