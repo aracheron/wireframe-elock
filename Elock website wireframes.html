@@ -149,8 +149,8 @@ form.fake{display:grid;gap:10px}
 
   <div class="tabs" role="tablist" aria-label="Wireframes">
     <button role="tab" aria-selected="true" aria-controls="v-home" id="t-home" type="button">Homepage (desktop)</button>
-    <button role="tab" aria-selected="false" aria-controls="v-mobile" id="t-mobile" type="button">Homepage (mobile)</button>
-    <button role="tab" aria-selected="false" aria-controls="v-product" id="t-product" type="button">Product page template</button>
+    <button role="tab" aria-selected="false" aria-controls="v-mobile" id="t-mobile" type="button" tabindex="-1">Homepage (mobile)</button>
+    <button role="tab" aria-selected="false" aria-controls="v-product" id="t-product" type="button" tabindex="-1">Product page template</button>
   </div>
 
   <!-- ============ HOMEPAGE ============ -->
@@ -552,15 +552,33 @@ form.fake{display:grid;gap:10px}
 
 <script>
 (function(){
-  var tabs=document.querySelectorAll('[role="tab"]');
+  var tabs=Array.from(document.querySelectorAll('[role="tab"]'));
   function show(id){
     tabs.forEach(function(t){
       var on=t.getAttribute('aria-controls')===id;
       t.setAttribute('aria-selected',on?'true':'false');
+      t.setAttribute('tabindex',on?'0':'-1');
       document.getElementById(t.getAttribute('aria-controls')).hidden=!on;
     });
   }
-  tabs.forEach(function(t){t.addEventListener('click',function(){show(t.getAttribute('aria-controls'));});});
+  tabs.forEach(function(t, i){
+    t.addEventListener('click',function(){
+      show(t.getAttribute('aria-controls'));
+    });
+    t.addEventListener('keydown', function(e){
+      var next = i;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next = (i + 1) % tabs.length;
+      else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') next = (i - 1 + tabs.length) % tabs.length;
+      else if (e.key === 'Home') next = 0;
+      else if (e.key === 'End') next = tabs.length - 1;
+
+      if (next !== i) {
+        e.preventDefault();
+        show(tabs[next].getAttribute('aria-controls'));
+        tabs[next].focus();
+      }
+    });
+  });
   var btn=document.getElementById('themeBtn');
   btn.addEventListener('click',function(){
     var root=document.documentElement;
